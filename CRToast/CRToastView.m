@@ -132,8 +132,14 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     CGFloat preferredPadding = self.toast.preferredPadding;
     
     CGFloat statusBarYOffset = self.toast.displayUnderStatusBar ? (CRGetStatusBarHeight()+CRStatusBarViewUnderStatusBarYOffsetAdjustment) : 0;
+ 
+    UIInterfaceOrientation deviceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if (UIInterfaceOrientationIsPortrait(deviceOrientation)) {
+        statusBarYOffset += naviBarHeightOffset;
+    }
+
     contentFrame.size.height = CGRectGetHeight(contentFrame) - statusBarYOffset;
-    
+
     self.backgroundView.frame = self.bounds;
     
     CGFloat imageXOffset = CRImageViewFrameXOffsetForAlignment(self.toast.imageAlignment, preferredPadding, contentFrame.size);
